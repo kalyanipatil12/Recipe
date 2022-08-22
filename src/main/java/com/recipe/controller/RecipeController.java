@@ -1,0 +1,134 @@
+package com.recipe.controller;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.recipe.dto.RecipesDTO;
+import com.recipe.entity.Recipes;
+import com.recipe.service.RecipesService;
+
+@CrossOrigin
+@RestController
+@Transactional
+public class RecipeController {
+	
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	
+
+@Autowired
+private RecipesService recipesService;
+
+//add recipe
+@PostMapping(value ="recipes")
+@ResponseStatus(HttpStatus.CREATED)
+public Recipes addRecipe(@RequestBody Recipes recipes) {
+	return recipesService.addRecipe(recipes);
+}
+
+
+//fetch recipe details
+@GetMapping(value="/recipes", produces= MediaType.APPLICATION_JSON_VALUE)
+public List<RecipesDTO> getRecipes(){
+	return recipesService.getRecipes();
+	
+}
+
+//get recipe by id
+@GetMapping("{id}")
+public Recipes getRecipeById(@PathVariable("id") long recipeId) {
+	return recipesService.getRecipeById(recipeId);
+}
+
+
+//update record
+@PutMapping("/updaterecipe")
+public ResponseEntity<String> updaterecipe(@RequestBody Recipes recipe){
+	try {
+		recipesService.updaterecipe(recipe);
+		return new ResponseEntity<String>(HttpStatus.OK);
+		
+	}
+	catch(NoSuchElementException ex) {
+		System.out.println(ex.getMessage());
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
+	
+}
+
+//delete recipe record
+@DeleteMapping("/recipe/{recipeid}")
+public ResponseEntity<String> deleteRecipe(@PathVariable long recipeid){
+	try {
+		recipesService.deleteRecipeById(recipeid);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	catch(RuntimeException ex) {
+		System.out.println(ex.getMessage());
+		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*//find all recipes
+@RequestMapping(value="getRecipes")
+public List<Recipes> getRecipes(){
+	return recipeServiceImpl.getRecipes();
+}
+
+//to call save method to save recipe
+@PostMapping(value="/saveRecipe")
+public Recipes saveRecipe(@RequestBody Recipes recipe) {
+	System.out.println("recipe save work properly");
+	recipeServiceImpl.saveRecipe(recipe);
+	return recipe;
+}
+
+//update recipe
+@PutMapping(value="/updateRecipe")
+public Recipes updateRecipe(@RequestBody Recipes recipe) {
+	return recipeServiceImpl.updateRecipe(recipe);
+	
+}
+//delete recipes
+@DeleteMapping(value="/deleteRecipe")
+public String deleteRecipe(@RequestParam int recipeId) {
+	recipeServiceImpl.deleteRecipe(recipeId);
+	return "recipe deleted";
+}*/
+
+}
+
+
+
+
