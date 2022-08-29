@@ -54,19 +54,11 @@ public class RecipeApplicationTests {
 		Assertions.assertEquals(recipe1.isEmpty(), recipeList.isEmpty());
 	}
 
-	/*@Test
-	public void getRecipeByIdTest() {
-		Optional<Recipes> recipe1 = Optional.ofNullable(new Recipes(1,"4people","misal","potatoes,chilli",true,"with oven"));
-		when(recipesRepository.findById(11)).thenReturn(recipe1);
-		assertEquals(11,RecipesService.getRecipesById("11").getId());
-		}*/
-	
-	
 	@Test
 	public void addRecipeTest() {
-		Recipes recipes1=new Recipes(100,"misal","curry","2people",true,"potatoes,chilli","with oven");
+		Recipes recipes1 = new Recipes(100, "misal", "curry", "2people", true, "potatoes,chilli", "with oven");
 		when(recipesRepository.save(recipes1)).thenReturn(recipes1);
 		assertEquals(recipes1, recipesService.addRecipe(recipes1));
 	}
-		
+
 }
