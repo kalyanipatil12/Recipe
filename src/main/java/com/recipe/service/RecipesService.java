@@ -13,100 +13,58 @@ import com.recipe.dto.RecipesDTO;
 import com.recipe.entity.Recipes;
 import com.recipe.repository.RecipesRepository;
 
-
-
-
 @Service
-public class RecipesService  {
-	Logger logger =LoggerFactory.getLogger(this.getClass());
-	
-	
+public class RecipesService {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private RecipesRepository recipesRepository;
-	
-	
-	//add recipe
+
+	// add recipe
 	public Recipes addRecipe(Recipes recipe) {
 		return recipesRepository.save(recipe);
-		
+
 	}
 
-	//fetch all recipes details 
-	public List<RecipesDTO> getRecipes(){
-		
-		List<Recipes> recipes =recipesRepository.findAll();
-		List<RecipesDTO> recipesDTO =new ArrayList<>();
-		
-		for(Recipes recipe:recipes) {
+	// fetch all recipes details
+	public List<RecipesDTO> getRecipes() {
+
+		List<Recipes> recipes = recipesRepository.findAll();
+		List<RecipesDTO> recipesDTO = new ArrayList<>();
+
+		for (Recipes recipe : recipes) {
 			recipesDTO.add(RecipesDTO.valueOf(recipe));
-			
+
 		}
+		System.out.println("data" + recipesRepository.findAll());
 		return recipesDTO;
 	}
 
-	//recipes by id
+	// recipes by id
 	public Recipes getRecipeById(long recipeId) {
 		return recipesRepository.findById(recipeId).get();
-		
+
 	}
-	
-	//updates recipe
-	
+
+	// updates recipe
+
 	public void updaterecipe(Recipes recipe) {
-		//check if the recipe with passed id exists or not
+		// check if the recipe with passed id exists or not
 		Recipes recipeA = recipesRepository.findById(recipe.getRecipeid()).orElseThrow();
-		//if recipe exists then updated
+		// if recipe exists then updated
 		recipesRepository.save(recipe);
-		
+
 	}
-	
-	//delete recipe
-	
+
+	// delete recipe
+
 	public void deleteRecipeById(long recipeId) {
 		try {
 			recipesRepository.deleteById(recipeId);
-			
-		}
-		catch(DataAccessException ex) {
+
+		} catch (DataAccessException ex) {
 			throw new RuntimeException(ex.getMessage());
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	/*@Override
-	public Recipes saveRecipe(Recipes recipe) {
-		return recipeRepository.save(recipe);
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public Recipes updateRecipe(Recipes recipe) {
-		return recipeRepository.save(recipe);
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Recipes> getRecipes() {
-		return(List<Recipes>) recipeRepository.findAll();
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteRecipe(int recipeId) {
-		recipeRepository.deleteById(recipeId);
-		// TODO Auto-generated method stub
-		
-	}*/
 }
-	
-
-

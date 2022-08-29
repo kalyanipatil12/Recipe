@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,106 +30,56 @@ import com.recipe.service.RecipesService;
 @RestController
 @Transactional
 public class RecipeController {
-	
-	
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	
 
-@Autowired
-private RecipesService recipesService;
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	private RecipesService recipesService;
 
 //add recipe
-@PostMapping(value ="recipes")
-@ResponseStatus(HttpStatus.CREATED)
-public Recipes addRecipe(@RequestBody Recipes recipes) {
-	return recipesService.addRecipe(recipes);
-}
-
+	@PostMapping(value = "recipes")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Recipes addRecipe(@RequestBody Recipes recipes) {
+		return recipesService.addRecipe(recipes);
+	}
 
 //fetch recipe details
-@GetMapping(value="/recipes", produces= MediaType.APPLICATION_JSON_VALUE)
-public List<RecipesDTO> getRecipes(){
-	return recipesService.getRecipes();
-	
-}
+	@GetMapping(value = "/recipes", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<RecipesDTO> getRecipes() {
+		return recipesService.getRecipes();
+
+	}
 
 //get recipe by id
-@GetMapping("{id}")
-public Recipes getRecipeById(@PathVariable("id") long recipeId) {
-	return recipesService.getRecipeById(recipeId);
-}
-
+	@GetMapping("{id}")
+	public Recipes getRecipeById(@PathVariable("id") long recipeId) {
+		return recipesService.getRecipeById(recipeId);
+	}
 
 //update record
-@PutMapping("/updaterecipe")
-public ResponseEntity<String> updaterecipe(@RequestBody Recipes recipe){
-	try {
-		recipesService.updaterecipe(recipe);
-		return new ResponseEntity<String>(HttpStatus.OK);
-		
+	@PutMapping("/updaterecipe")
+	public ResponseEntity<String> updaterecipe(@RequestBody Recipes recipe) {
+		try {
+			recipesService.updaterecipe(recipe);
+			return new ResponseEntity<String>(HttpStatus.OK);
+
+		} catch (NoSuchElementException ex) {
+			System.out.println(ex.getMessage());
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
+
 	}
-	catch(NoSuchElementException ex) {
-		System.out.println(ex.getMessage());
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-	}
-	
-}
 
 //delete recipe record
-@DeleteMapping("/recipe/{recipeid}")
-public ResponseEntity<String> deleteRecipe(@PathVariable long recipeid){
-	try {
-		recipesService.deleteRecipeById(recipeid);
-		return new ResponseEntity<String>(HttpStatus.OK);
+	@DeleteMapping("/recipe/{recipeid}")
+	public ResponseEntity<String> deleteRecipe(@PathVariable long recipeid) {
+		try {
+			recipesService.deleteRecipeById(recipeid);
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch (RuntimeException ex) {
+			System.out.println(ex.getMessage());
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
 	}
-	catch(RuntimeException ex) {
-		System.out.println(ex.getMessage());
-		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*//find all recipes
-@RequestMapping(value="getRecipes")
-public List<Recipes> getRecipes(){
-	return recipeServiceImpl.getRecipes();
-}
-
-//to call save method to save recipe
-@PostMapping(value="/saveRecipe")
-public Recipes saveRecipe(@RequestBody Recipes recipe) {
-	System.out.println("recipe save work properly");
-	recipeServiceImpl.saveRecipe(recipe);
-	return recipe;
-}
-
-//update recipe
-@PutMapping(value="/updateRecipe")
-public Recipes updateRecipe(@RequestBody Recipes recipe) {
-	return recipeServiceImpl.updateRecipe(recipe);
-	
-}
-//delete recipes
-@DeleteMapping(value="/deleteRecipe")
-public String deleteRecipe(@RequestParam int recipeId) {
-	recipeServiceImpl.deleteRecipe(recipeId);
-	return "recipe deleted";
-}*/
 
 }
-
-
-
-

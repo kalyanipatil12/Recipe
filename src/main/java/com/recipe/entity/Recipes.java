@@ -8,31 +8,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="recipe")
+@Table(name = "recipe")
 public class Recipes {
 	@Id
-   @Column(name ="recipeid")
-	//@GeneratedValue
+	@Column(name = "recipeid")
+	// @GeneratedValue
 	long recipeid;
-	
-	@Column(name ="recipename")
-	 String recipeName;
-	
-	@Column(name ="recipetype")
-	 String recipeType;
-	
-	@Column(name ="recipequantity")
-	 String recipeQuantity;
-	
-	@Column(nullable = false ,name ="isvegeterian")
-	 boolean isVegeterian;
-	
-	@Column(name ="ingredients")
-	 String ingredients;
-	
-	@Column(name ="instructions")
-	 String instructions;
-	
+
+	@Column(name = "recipename")
+	String recipeName;
+
+	@Column(name = "recipetype")
+	String recipeType;
+
+	@Column(name = "serving")
+	String serving;
+
+
+	@Column(nullable = false, name = "isvegeterian")
+	boolean isVegeterian;
+
+	@Column(name = "ingredients")
+	String ingredients;
+
+	@Column(name = "instructions")
+	String instructions;
+
 	public long getRecipeid() {
 		return recipeid;
 	}
@@ -57,12 +58,12 @@ public class Recipes {
 		this.recipeType = recipeType;
 	}
 
-	public String getRecipeQuantity() {
-		return recipeQuantity;
+	public String getserving() {
+		return serving;
 	}
 
-	public void setRecipeQuantity(String recipeQuantity) {
-		this.recipeQuantity = recipeQuantity;
+	public void setserving(String serving) {
+		this.serving = serving;
 	}
 
 	public boolean getIsVegeterian() {
@@ -91,10 +92,27 @@ public class Recipes {
 
 	public Recipes() {
 		super();
-		
+
+	}
+
+	public Recipes(long recipeid, String recipeName, String recipeType, String serving, boolean isVegeterian,
+			String ingredients, String instructions) {
+		super();
+		this.recipeid = recipeid;
+		this.recipeName = recipeName;
+		this.recipeType = recipeType;
+		this.serving = serving;
+		this.isVegeterian = isVegeterian;
+		this.ingredients = ingredients;
+		this.instructions = instructions;
 	}
 	
 	
-	
+	@Override
+	public String toString() {
+		return "Recipes [recipeid=" + recipeid + ", recipeName=" + recipeName + ", recipeType=" + recipeType
+				+ ", serving=" + serving + ", isVegeterian=" + isVegeterian + ", ingredients=" + ingredients
+				+ ", instructions=" + instructions + "]";
+	}
 
 }
