@@ -31,8 +31,6 @@ import com.recipe.service.RecipesService;
 @Transactional
 public class RecipeController {
 
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	private RecipesService recipesService;
 
@@ -58,9 +56,9 @@ public class RecipeController {
 
 //update record
 	@PutMapping("/updaterecipe")
-	public ResponseEntity<String> updaterecipe(@RequestBody Recipes recipe) {
+	public ResponseEntity<String> updateRecipe(@RequestBody Recipes recipe) {
 		try {
-			recipesService.updaterecipe(recipe);
+			recipesService.updateRecipe(recipe);
 			return new ResponseEntity<String>(HttpStatus.OK);
 
 		} catch (NoSuchElementException ex) {

@@ -22,8 +22,7 @@ public class Recipes {
 	String recipeType;
 
 	@Column(name = "serving")
-	String serving;
-
+	Integer serving;
 
 	@Column(nullable = false, name = "isvegeterian")
 	boolean isVegeterian;
@@ -58,11 +57,11 @@ public class Recipes {
 		this.recipeType = recipeType;
 	}
 
-	public String getserving() {
+	public Integer getserving() {
 		return serving;
 	}
 
-	public void setserving(String serving) {
+	public void setserving(Integer serving) {
 		this.serving = serving;
 	}
 
@@ -95,7 +94,7 @@ public class Recipes {
 
 	}
 
-	public Recipes(long recipeid, String recipeName, String recipeType, String serving, boolean isVegeterian,
+	public Recipes(long recipeid, String recipeName, String recipeType, Integer serving, boolean isVegeterian,
 			String ingredients, String instructions) {
 		super();
 		this.recipeid = recipeid;
@@ -106,8 +105,7 @@ public class Recipes {
 		this.ingredients = ingredients;
 		this.instructions = instructions;
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "Recipes [recipeid=" + recipeid + ", recipeName=" + recipeName + ", recipeType=" + recipeType

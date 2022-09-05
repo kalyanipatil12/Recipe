@@ -6,7 +6,7 @@ public class RecipesDTO {
 	long recipeid;
 	String recipeName;
 	String recipeType;
-	String serving;
+	Integer serving;
 	boolean isVegeterian;
 	String ingredients;
 	String instructions;
@@ -16,7 +16,7 @@ public class RecipesDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RecipesDTO(long recipeid, String recipeName, String recipeType, String serving, boolean isVegeterian,
+	public RecipesDTO(long recipeid, String recipeName, String recipeType, Integer serving, boolean isVegeterian,
 			String ingredients, String instructions) {
 		super();
 		this.recipeid = recipeid;
@@ -52,11 +52,11 @@ public class RecipesDTO {
 		this.recipeType = recipeType;
 	}
 
-	public String getserving() {
+	public Integer getserving() {
 		return serving;
 	}
 
-	public void setserving(String serving) {
+	public void setserving(Integer serving) {
 		this.serving = serving;
 	}
 

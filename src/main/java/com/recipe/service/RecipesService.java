@@ -15,7 +15,6 @@ import com.recipe.repository.RecipesRepository;
 
 @Service
 public class RecipesService {
-	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private RecipesRepository recipesRepository;
@@ -48,9 +47,9 @@ public class RecipesService {
 
 	// updates recipe
 
-	public void updaterecipe(Recipes recipe) {
+	public void updateRecipe(Recipes recipe) {
 		// check if the recipe with passed id exists or not
-		Recipes recipeA = recipesRepository.findById(recipe.getRecipeid()).orElseThrow();
+		Recipes recipe1 = recipesRepository.findById(recipe.getRecipeid()).orElseThrow();
 		// if recipe exists then updated
 		recipesRepository.save(recipe);
 
